@@ -1,37 +1,349 @@
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ताज़ा खबर - Hindi News</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ताज़ा खबर - Full Feature News Website</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari&display=swap" rel="stylesheet" />
+
+<style>
+  /* Reset */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  body {
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    background: #f7f7f7;
+    color: #333;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  body.dark {
+    background: #121212;
+    color: #ddd;
+  }
+  header {
+    background: #e31c1c;
+    color: white;
+    padding: 15px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  body.dark header {
+    background: #1f1f1f;
+    color: #ddd;
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+  }
+  body.dark nav a {
+    color: #ddd;
+  }
+  nav a:hover {
+    text-decoration: underline;
+  }
+  .search-bar {
+    margin-left: 20px;
+    position: relative;
+    flex: 1 1 250px;
+  }
+  .search-bar input {
+    width: 100%;
+    padding: 7px 10px;
+    border-radius: 20px;
+    border: none;
+    font-size: 1rem;
+  }
+  .dark-mode-toggle {
+    cursor: pointer;
+    background: white;
+    color: #e31c1c;
+    border: none;
+    padding: 7px 14px;
+    border-radius: 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-left: 20px;
+    flex-shrink: 0;
+  }
+  body.dark .dark-mode-toggle {
+    background: #e31c1c;
+    color: white;
+  }
+
+  /* News Ticker */
+  .news-ticker {
+    background: #b71c1c;
+    color: white;
+    padding: 10px 20px;
+    overflow: hidden;
+    position: relative;
+  }
+  .news-ticker p {
+    white-space: nowrap;
+    display: inline-block;
+    position: absolute;
+    will-change: transform;
+    animation: ticker 20s linear infinite;
+    font-weight: 600;
+  }
+  @keyframes ticker {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  /* Layout */
+  main {
+    max-width: 1200px;
+    margin: 20px auto;
+    display: flex;
+    gap: 30px;
+    padding: 0 15px;
+  }
+  .content {
+    flex: 3;
+  }
+  .featured-news {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 40px;
+    box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  body.dark .featured-news {
+    background: #1e1e1e;
+    color: #ddd;
+  }
+  .featured-news h2 {
+    font-size: 1.9rem;
+    margin-bottom: 15px;
+    color: #b71c1c;
+  }
+  body.dark .featured-news h2 {
+    color: #e57373;
+  }
+  .featured-news p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  .latest-news {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+    gap: 25px;
+  }
+  .news-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+  }
+  body.dark .news-card {
+    background: #1e1e1e;
+    color: #ddd;
+  }
+  .news-card:hover {
+    transform: scale(1.02);
+  }
+  .news-content h3 {
+    font-size: 1.2rem;
+    color: #b71c1c;
+    margin-bottom: 10px;
+  }
+  body.dark .news-content h3 {
+    color: #e57373;
+  }
+  .news-content p {
+    font-size: 1rem;
+    line-height: 1.4;
+    color: #444;
+  }
+  body.dark .news-content p {
+    color: #ccc;
+  }
+
+  aside.sidebar {
+    flex: 1;
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
+    height: fit-content;
+    position: sticky;
+    top: 100px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  body.dark aside.sidebar {
+    background: #1e1e1e;
+    color: #ddd;
+  }
+  aside.sidebar h3 {
+    border-bottom: 2px solid #e31c1c;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+    color: #b71c1c;
+  }
+  body.dark aside.sidebar h3 {
+    color: #e57373;
+  }
+  aside.sidebar ul {
+    list-style: none;
+  }
+  aside.sidebar ul li {
+    margin-bottom: 12px;
+  }
+  aside.sidebar ul li a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  body.dark aside.sidebar ul li a {
+    color: #ddd;
+  }
+  aside.sidebar ul li a:hover {
+    text-decoration: underline;
+  }
+
+  footer {
+    text-align: center;
+    padding: 15px 10px;
+    background: #222;
+    color: white;
+    margin-top: 50px;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+  }
+  body.dark footer {
+    background: #111;
+    color: #ccc;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    main {
+      flex-direction: column;
+    }
+    aside.sidebar {
+      position: static;
+      margin-top: 30px;
+      height: auto;
+    }
+  }
+  @media (max-width: 480px) {
+    header h1 {
+      font-size: 1.5rem;
+      flex: 1 1 100%;
+      margin-bottom: 10px;
+    }
+    nav ul {
+      justify-content: center;
+      gap: 12px;
+    }
+    .search-bar {
+      margin-left: 0;
+      margin-top: 10px;
+      flex: 1 1 100%;
+    }
+    .dark-mode-toggle {
+      margin-left: 0;
+      margin-top: 10px;
+      flex: 1 1 100%;
+    }
+  }
+</style>
 </head>
 <body>
-    <header>
-        <h1>ताज़ा खबर</h1>
-        <nav>
-            <a href="#">होम</a>
-            <a href="#">राजनीति</a>
-            <a href="#">खेल</a>
-            <a href="#">शिक्षा</a>
-            <a href="#">जॉब्स</a>
-        </nav>
-    </header>
-    <main>
-        <section class="news">
-            <h2>लोकसभा चुनावों में कांग्रेस की हार, राहुल गांधी ने ली जिम्मेदारी</h2>
-            <img src="https://www.google.com/imgres?q=%E0%A4%B2%E0%A5%8B%E0%A4%95%E0%A4%B8%E0%A4%AD%E0%A4%BE%20%E0%A4%9A%E0%A5%81%E0%A4%A8%E0%A4%BE%E0%A4%B5%E0%A5%8B%E0%A4%82%20%E0%A4%AE%E0%A5%87%E0%A4%82%20%E0%A4%95%E0%A4%BE%E0%A4%82%E0%A4%97%E0%A5%8D%E0%A4%B0%E0%A5%87%E0%A4%B8%20%E0%A4%95%E0%A5%80%20%E0%A4%B9%E0%A4%BE%E0%A4%B0%2C%20%E0%A4%B0%E0%A4%BE%E0%A4%B9%E0%A5%81%E0%A4%B2%20%E0%A4%97%E0%A4%BE%E0%A4%82%E0%A4%A7%E0%A5%80%20%E0%A4%A8%E0%A5%87%20%E0%A4%B2%E0%A5%80%20%E0%A4%9C%E0%A4%BF%E0%A4%AE%E0%A5%8D%E0%A4%AE%E0%A5%87%E0%A4%A6%E0%A4%BE%E0%A4%B0%E0%A5%80&imgurl=https%3A%2F%2Fwww.livehindustan.com%2Flh-img%2Fuploadimage%2Flibrary%2F2019%2F05%2F29%2F16_9%2F16_9_1%2Fcongress_president_rahul_gandhi_pti_file_photo__1559100841.jpg&imgrefurl=https%3A%2F%2Fwww.livehindustan.com%2Fnational%2Fstory-rahul-gandhi-says-as-president-of-the-congress-party-i-m-responsible-for-the-loss-of-the-2019-elections-2606251.html&docid=CCLp6ugCwmXKrM&tbnid=sk64CciZI5_gQM&vet=12ahUKEwjj9OD69aKNAxV4fGwGHY9xC_oQM3oECGYQAA..i&w=640&h=360&hcb=2&itg=1&ved=2ahUKEwjj9OD69aKNAxV4fGwGHY9xC_oQM3oECGYQAA" alt="राहुल गांधी">
-            <p>लोकसभा में कांग्रेस की हार पर राहुल गांधी ने कहा कि यह आत्ममंथन का समय है।</p>
-        </section>
-        <section class="news">
-            <h2>मुंबई में भारी बारिश से जनजीवन प्रभावित</h2>
-            <img src="https://www.google.com/imgres?q=%E0%A4%AE%E0%A5%81%E0%A4%82%E0%A4%AC%E0%A4%88%20%E0%A4%AE%E0%A5%87%E0%A4%82%20%E0%A4%AD%E0%A4%BE%E0%A4%B0%E0%A5%80%20%E0%A4%AC%E0%A4%BE%E0%A4%B0%E0%A4%BF%E0%A4%B6%20%E0%A4%B8%E0%A5%87%20%E0%A4%9C%E0%A4%A8%E0%A4%9C%E0%A5%80%E0%A4%B5%E0%A4%A8%20%E0%A4%AA%E0%A5%8D%E0%A4%B0%E0%A4%AD%E0%A4%BE%E0%A4%B5%E0%A4%BF%E0%A4%A4&imgurl=https%3A%2F%2Fmedia.assettype.com%2Fnavjivanindia%252F2019-07%252Fbbb36e0b-2090-4584-b27c-52a40665654e%252Fddf6fa7658a1bd6bac4da26cc25bf0a0.jpg%3Frect%3D0%252C181%252C2000%252C1125%26auto%3Dformat%252Ccompress%26fmt%3Dwebp%26w%3D1200&imgrefurl=https%3A%2F%2Fwww.navjivanindia.com%2Findia%2Fheavy-rain-in-mumbai-airport-flight-rail-affected&docid=zrrbvCEvVR5gNM&tbnid=0cu7kcIkdO3dkM&vet=12ahUKEwjg-Kmg9qKNAxVnS2cHHd_QLRUQM3oECE0QAA..i&w=1200&h=675&hcb=2&itg=1&ved=2ahUKEwjg-Kmg9qKNAxVnS2cHHd_QLRUQM3oECE0QAA" alt="मुंबई बारिश">
-            <p>लगातार बारिश से ट्रैफिक और लोकल ट्रेनों पर असर, स्कूलों में छुट्टी घोषित।</p>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2025 TajaKhabar by Aditya</p>
-    </footer>
-</body>
-</html>
+
+<header>
+  <h1>ताज़ा खबर</h1>
+  <nav>
+    <ul>
+      <li><a href="#">होम</a></li>
+      <li><a href="#">राजनीति</a></li>
+      <li><a href="#">खेल</a></li>
+      <li><a href="#">शिक्षा</a></li>
+      <li><a href="#">जॉब्स</a></li>
+    </ul>
+  </nav>
+
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="खोजें..." onkeyup="searchNews()" />
+  </div>
+
+  <button class="dark-mode-toggle" onclick="toggleDarkMode()">डार्क मोड</button>
+</header>
+
+<div class="news-ticker" aria-label="Top news ticker">
+  <p id="tickerText">
+    लोकसभा चुनावों में कांग्रेस की हार - राहुल गांधी ने जिम्मेदारी ली &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    मुंबई में भारी बारिश से जनजीवन प्रभावित &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    क्रिकेट विश्व कप: भारत ने सेमीफाइनल में जगह बनाई &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    शिक्षा क्षेत्र में नई नौकरियां शुरू &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    रोजगार के नए अवसर
+  </p>
+</div>
+
+<main>
+  <div class="content" id="newsContainer">
+
+    <section class="featured-news" data-title="लोकसभा चुनावों में कांग्रेस की हार, राहुल गांधी ने ली जिम्मेदारी">
+      <h2>लोकसभा चुनावों में कांग्रेस की हार, राहुल गांधी ने ली जिम्मेदारी</h2>
+<p>कांग्रेस की हार पर राहुल गांधी ने कहा कि यह आत्ममंथन का समय है। पार्टी संगठन को मजबूत करने की योजना बनाई जाएगी। आगामी चुनावों में बेहतर प्रदर्शन के लिए रणनीति तैयार की जाएगी।</p>
+</section>
+
+<section class="news-card" data-title="मुंबई में भारी बारिश से जनजीवन प्रभावित">
+  <div class="news-content">
+    <h3>मुंबई में भारी बारिश से जनजीवन प्रभावित</h3>
+    <p>लगातार बारिश से ट्रैफिक जाम और लोकल ट्रेनों पर असर पड़ा है। स्कूलों में छुट्टी घोषित की गई है। प्रशासन ने राहत कार्य शुरू कर दिए हैं।</p>
+  </div>
+</section>
+
+<section class="news-card" data-title="क्रिकेट विश्व कप: भारत ने सेमीफाइनल में जगह बनाई">
+  <div class="news-content">
+    <h3>क्रिकेट विश्व कप: भारत ने सेमीफाइनल में जगह बनाई</h3>
+    <p>भारत ने रोमांचक मुकाबले में इंग्लैंड को हराकर सेमीफाइनल में प्रवेश किया। फैंस में जोश देखने को मिला।</p>
+  </div>
+</section>
+
+<section class="news-card" data-title="शिक्षा क्षेत्र में नई नौकरियां शुरू">
+  <div class="news-content">
+    <h3>शिक्षा क्षेत्र में नई नौकरियां शुरू</h3>
+    <p>सरकार ने शिक्षा क्षेत्र में 5000 नई नौकरियां शुरू करने की घोषणा की है। अभ्यर्थी जल्द आवेदन करें।</p>
+  </div>
+</section>
+
+<section class="news-card" data-title="रोजगार के नए अवसर">
+  <div class="news-content">
+    <h3>रोजगार के नए अवसर</h3>
+    <p>देशभर में विभिन्न क्षेत्रों में रोजगार के नए अवसर उत्पन्न हो रहे हैं। युवाओं के लिए यह सुनहरा मौका है।</p>
+  </div>
+</section>
+</div> <aside class="sidebar" aria-label="Trending news"> <h3>ट्रेंडिंग खबरें</h3> <ul> <li><a href="#">लोकसभा चुनावों में कांग्रेस की हार</a></li> <li><a href="#">मुंबई में भारी बारिश से जनजीवन प्रभावित</a></li> <li><a href="#">क्रिकेट विश्व कप: भारत ने सेमीफाइनल में जगह बनाई</a></li> <li><a href="#">शिक्षा क्षेत्र में नई नौकरियां शुरू</a></li> <li><a href="#">रोजगार के नए अवसर</a></li> </ul> </aside> </main> <footer> <footer>
+  <p>&copy; 2025 ताज़ा खबर by Aditya <br> All rights reserved.</p>
+  <p>Contact: <a href="mailto:contact@tajakhabar.com">contact@tajakhabar.com</a></p>
+</footer>
+ <script> // डार्क मोड टॉगल करने वाला फंक्शन function toggleDarkMode() { document.body.classList.toggle('dark'); } // न्यूज सर्च करने वाला फंक्शन function searchNews() { const input = document.getElementById('searchInput').value.toLowerCase(); const newsContainer = document.getElementById('newsContainer'); const newsItems = newsContainer.querySelectorAll('section'); newsItems.forEach(item => { const title = item.getAttribute('data-title').toLowerCase(); if (title.includes(input)) { item.style.display = ''; } else { item.style.display = 'none'; } }); } </script> </body> </html> 
