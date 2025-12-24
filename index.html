@@ -1,281 +1,124 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ताज़ा खबर - Full Feature News Website</title>
-
-<!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari&display=swap" rel="stylesheet" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ताज़ा खबर | हिंदी न्यूज़</title>
 
 <style>
-  /* Reset */
-  * {
-    margin: 0; padding: 0; box-sizing: border-box;
-  }
-  body {
-    font-family: 'Noto Sans Devanagari', sans-serif;
-    background: #f7f7f7;
-    color: #333;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  body.dark {
-    background: #121212;
-    color: #ddd;
-  }
-  header {
-    background: #e31c1c;
-    color: white;
-    padding: 15px 20px;
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  body.dark header {
-    background: #1f1f1f;
-    color: #ddd;
-  }
-  nav ul {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-  nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1rem;
-    transition: color 0.3s ease;
-  }
-  body.dark nav a {
-    color: #ddd;
-  }
-  nav a:hover {
-    text-decoration: underline;
-  }
-  .search-bar {
-    margin-left: 20px;
-    position: relative;
-    flex: 1 1 250px;
-  }
-  .search-bar input {
-    width: 100%;
-    padding: 7px 10px;
-    border-radius: 20px;
-    border: none;
-    font-size: 1rem;
-  }
-  .dark-mode-toggle {
-    cursor: pointer;
-    background: white;
-    color: #e31c1c;
-    border: none;
-    padding: 7px 14px;
-    border-radius: 20px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    margin-left: 20px;
-    flex-shrink: 0;
-  }
-  body.dark .dark-mode-toggle {
-    background: #e31c1c;
-    color: white;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  /* News Ticker */
-  .news-ticker {
-    background: #b71c1c;
-    color: white;
-    padding: 10px 20px;
-    overflow: hidden;
-    position: relative;
-  }
-  .news-ticker p {
-    white-space: nowrap;
-    display: inline-block;
-    position: absolute;
-    will-change: transform;
-    animation: ticker 20s linear infinite;
-    font-weight: 600;
-  }
-  @keyframes ticker {
-    0% {
-      transform: translateX(100%);
-    }
-    100% {
-      transform: translateX(-100%);
-    }
-  }
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  color: #222;
+}
 
-  /* Layout */
-  main {
-    max-width: 1200px;
-    margin: 20px auto;
-    display: flex;
-    gap: 30px;
-    padding: 0 15px;
-  }
-  .content {
-    flex: 3;
-  }
-  .featured-news {
-    background: white;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 40px;
-    box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  body.dark .featured-news {
-    background: #1e1e1e;
-    color: #ddd;
-  }
-  .featured-news h2 {
-    font-size: 1.9rem;
-    margin-bottom: 15px;
-    color: #b71c1c;
-  }
-  body.dark .featured-news h2 {
-    color: #e57373;
-  }
-  .featured-news p {
-    font-size: 1.1rem;
-    line-height: 1.6;
-  }
+/* Header */
+header {
+  background: #c62828;
+  color: white;
+  padding: 15px;
+}
 
-  .latest-news {
-    display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
-    gap: 25px;
-  }
-  .news-card {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
-    padding: 15px 20px;
-    display: flex;
+header h1 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+nav ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  gap: 20px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* News Ticker */
+.ticker {
+  background: #b71c1c;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 10px;
+}
+
+.ticker span {
+  display: inline-block;
+  padding-left: 100%;
+  animation: scroll 20s linear infinite;
+}
+
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+/* Layout */
+.container {
+  max-width: 1200px;
+  margin: 20px auto;
+  display: flex;
+  gap: 20px;
+  padding: 0 15px;
+}
+
+main {
+  flex: 3;
+}
+
+aside {
+  flex: 1;
+}
+
+/* Cards */
+.card {
+  background: white;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+}
+
+.card h2, .card h3 {
+  color: #c62828;
+  margin-bottom: 8px;
+}
+
+/* Sidebar */
+aside ul {
+  list-style: none;
+}
+
+aside li {
+  margin-bottom: 10px;
+}
+
+/* Footer */
+footer {
+  background: #222;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 40px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
     flex-direction: column;
-    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
   }
-  body.dark .news-card {
-    background: #1e1e1e;
-    color: #ddd;
-  }
-  .news-card:hover {
-    transform: scale(1.02);
-  }
-  .news-content h3 {
-    font-size: 1.2rem;
-    color: #b71c1c;
-    margin-bottom: 10px;
-  }
-  body.dark .news-content h3 {
-    color: #e57373;
-  }
-  .news-content p {
-    font-size: 1rem;
-    line-height: 1.4;
-    color: #444;
-  }
-  body.dark .news-content p {
-    color: #ccc;
-  }
-
-  aside.sidebar {
-    flex: 1;
-    background: white;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
-    height: fit-content;
-    position: sticky;
-    top: 100px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  body.dark aside.sidebar {
-    background: #1e1e1e;
-    color: #ddd;
-  }
-  aside.sidebar h3 {
-    border-bottom: 2px solid #e31c1c;
-    padding-bottom: 8px;
-    margin-bottom: 15px;
-    color: #b71c1c;
-  }
-  body.dark aside.sidebar h3 {
-    color: #e57373;
-  }
-  aside.sidebar ul {
-    list-style: none;
-  }
-  aside.sidebar ul li {
-    margin-bottom: 12px;
-  }
-  aside.sidebar ul li a {
-    color: #333;
-    text-decoration: none;
-    font-weight: 600;
-  }
-  body.dark aside.sidebar ul li a {
-    color: #ddd;
-  }
-  aside.sidebar ul li a:hover {
-    text-decoration: underline;
-  }
-
-  footer {
-    text-align: center;
-    padding: 15px 10px;
-    background: #222;
-    color: white;
-    margin-top: 50px;
-    font-size: 0.9rem;
-    transition: background-color 0.3s ease;
-  }
-  body.dark footer {
-    background: #111;
-    color: #ccc;
-  }
-
-  /* Responsive */
-  @media (max-width: 1024px) {
-    main {
-      flex-direction: column;
-    }
-    aside.sidebar {
-      position: static;
-      margin-top: 30px;
-      height: auto;
-    }
-  }
-  @media (max-width: 480px) {
-    header h1 {
-      font-size: 1.5rem;
-      flex: 1 1 100%;
-      margin-bottom: 10px;
-    }
-    nav ul {
-      justify-content: center;
-      gap: 12px;
-    }
-    .search-bar {
-      margin-left: 0;
-      margin-top: 10px;
-      flex: 1 1 100%;
-    }
-    .dark-mode-toggle {
-      margin-left: 0;
-      margin-top: 10px;
-      flex: 1 1 100%;
-    }
-  }
+}
 </style>
 </head>
+
 <body>
 
 <header>
@@ -289,61 +132,53 @@
       <li><a href="#">जॉब्स</a></li>
     </ul>
   </nav>
-
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="खोजें..." onkeyup="searchNews()" />
-  </div>
-
-  <button class="dark-mode-toggle" onclick="toggleDarkMode()">डार्क मोड</button>
 </header>
 
-<div class="news-ticker" aria-label="Top news ticker">
-  <p id="tickerText">
-    लोकसभा चुनावों में कांग्रेस की हार - राहुल गांधी ने जिम्मेदारी ली &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-    मुंबई में भारी बारिश से जनजीवन प्रभावित &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-    क्रिकेट विश्व कप: भारत ने सेमीफाइनल में जगह बनाई &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-    शिक्षा क्षेत्र में नई नौकरियां शुरू &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+<div class="ticker">
+  <span>
+    लोकसभा चुनावों में कांग्रेस की हार | मुंबई में भारी बारिश |
+    क्रिकेट विश्व कप: भारत सेमीफाइनल में |
+    शिक्षा क्षेत्र में नई नौकरियां |
     रोजगार के नए अवसर
-  </p>
+  </span>
 </div>
 
+<div class="container">
+
 <main>
-  <div class="content" id="newsContainer">
-
-    <section class="featured-news" data-title="लोकसभा चुनावों में कांग्रेस की हार, राहुल गांधी ने ली जिम्मेदारी">
-      <h2>लोकसभा चुनावों में कांग्रेस की हार, राहुल गांधी ने ली जिम्मेदारी</h2>
-<p>कांग्रेस की हार पर राहुल गांधी ने कहा कि यह आत्ममंथन का समय है। पार्टी संगठन को मजबूत करने की योजना बनाई जाएगी। आगामी चुनावों में बेहतर प्रदर्शन के लिए रणनीति तैयार की जाएगी।</p>
-</section>
-
-<section class="news-card" data-title="मुंबई में भारी बारिश से जनजीवन प्रभावित">
-  <div class="news-content">
-    <h3>मुंबई में भारी बारिश से जनजीवन प्रभावित</h3>
-    <p>लगातार बारिश से ट्रैफिक जाम और लोकल ट्रेनों पर असर पड़ा है। स्कूलों में छुट्टी घोषित की गई है। प्रशासन ने राहत कार्य शुरू कर दिए हैं।</p>
+  <div class="card">
+    <h2>लोकसभा चुनावों में कांग्रेस की हार</h2>
+    <p>राहुल गांधी ने कहा कि पार्टी आत्ममंथन करेगी और संगठन को मजबूत किया जाएगा।</p>
   </div>
-</section>
 
-<section class="news-card" data-title="क्रिकेट विश्व कप: भारत ने सेमीफाइनल में जगह बनाई">
-  <div class="news-content">
-    <h3>क्रिकेट विश्व कप: भारत ने सेमीफाइनल में जगह बनाई</h3>
-    <p>भारत ने रोमांचक मुकाबले में इंग्लैंड को हराकर सेमीफाइनल में प्रवेश किया। फैंस में जोश देखने को मिला।</p>
+  <div class="card">
+    <h3>मुंबई में भारी बारिश</h3>
+    <p>लगातार बारिश से जनजीवन प्रभावित, स्कूल बंद।</p>
   </div>
-</section>
 
-<section class="news-card" data-title="शिक्षा क्षेत्र में नई नौकरियां शुरू">
-  <div class="news-content">
-    <h3>शिक्षा क्षेत्र में नई नौकरियां शुरू</h3>
-    <p>सरकार ने शिक्षा क्षेत्र में 5000 नई नौकरियां शुरू करने की घोषणा की है। अभ्यर्थी जल्द आवेदन करें।</p>
+  <div class="card">
+    <h3>क्रिकेट विश्व कप</h3>
+    <p>भारत ने रोमांचक मुकाबले में सेमीफाइनल में जगह बनाई।</p>
   </div>
-</section>
+</main>
 
-<section class="news-card" data-title="रोजगार के नए अवसर">
-  <div class="news-content">
-    <h3>रोजगार के नए अवसर</h3>
-    <p>देशभर में विभिन्न क्षेत्रों में रोजगार के नए अवसर उत्पन्न हो रहे हैं। युवाओं के लिए यह सुनहरा मौका है।</p>
+<aside>
+  <div class="card">
+    <h3>ट्रेंडिंग खबरें</h3>
+    <ul>
+      <li>लोकसभा चुनाव</li>
+      <li>मुंबई बारिश</li>
+      <li>क्रिकेट विश्व कप</li>
+      <li>नई नौकरियां</li>
+    </ul>
   </div>
-</section>
-</div> <aside class="sidebar" aria-label="Trending news"> <h3>ट्रेंडिंग खबरें</h3> <ul> <li><a href="#">लोकसभा चुनावों में कांग्रेस की हार</a></li> <li><a href="#">मुंबई में भारी बारिश से जनजीवन प्रभावित</a></li> <li><a href="#">क्रिकेट विश्व कप: भारत ने सेमीफाइनल में जगह बनाई</a></li> <li><a href="#">शिक्षा क्षेत्र में नई नौकरियां शुरू</a></li> <li><a href="#">रोजगार के नए अवसर</a></li> </ul> </aside> </main> <footer> <footer>
-  <p>&copy; 2025 ताज़ा खबर by Aditya <br> All rights reserved.</p>
-  <p>Contact: <a href="mailto:contact@tajakhabar.com">contact@tajakhabar.com</a></p>
+</aside>
+
+</div>
+
+<footer>
+  <p>© 2025 ताज़ा खबर | All Rights Reserved</p>
 </footer>
- <script> // डार्क मोड टॉगल करने वाला फंक्शन function toggleDarkMode() { document.body.classList.toggle('dark'); } // न्यूज सर्च करने वाला फंक्शन function searchNews() { const input = document.getElementById('searchInput').value.toLowerCase(); const newsContainer = document.getElementById('newsContainer'); const newsItems = newsContainer.querySelectorAll('section'); newsItems.forEach(item => { const title = item.getAttribute('data-title').toLowerCase(); if (title.includes(input)) { item.style.display = ''; } else { item.style.display = 'none'; } }); } </script> </body> </html> 
+
+</body>
+</html>
