@@ -365,9 +365,6 @@
   </footer>
 
   <script>
-    const API_KEY = 'ede685c8528fadc2883b16f7dd97d00b';
-    const BASE_URL = 'https://gnews.io/api/v4';
-
     const categoryMap = {
       general: 'general',
       politics: 'nation',
@@ -404,7 +401,7 @@
 
       try {
         const topic = categoryMap[category];
-        const url = `${BASE_URL}/top-headlines?topic=${topic}&lang=hi&country=in&max=10&apikey=${API_KEY}`;
+        const url = `/api/news?topic=${topic}`;
         const res = await fetch(url);
         const data = await res.json();
 
